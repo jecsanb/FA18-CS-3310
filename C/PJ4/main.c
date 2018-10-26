@@ -6,24 +6,42 @@
 #include <math.h>
 
 //returns the number of digits in n
-int countDigit(int n){
+int countDigit(int n);
+
+int chartoint(char c);
+
+int strtoint(char *str);
+void printstr(char *str);
+
+void printstr(char *str){
+    assert( str != NULL);
+    while(*str){
+        putchar(*str);
+        ++str;
+    }
+}
+int countDigit(int n) {
     n = abs(n);
     return (int) (floor(log10(n))) + 1;
 }
 
-// returns each digit of n in an array;
-int * getdigits(int n){
+char  inttochar(int n) {
+    assert(n < 10);
+    return (char) (n + 0x30);
 
 }
 
-
 char *inttostr(int num) {
-    int digits = countDigit(num);
-    char *string = malloc((digits + 1) * sizeof(char));
-    for (int i = 0; i < digits; ++i) {
-            // do stuff here
+    int digits = countDigit(num) + 1;
+    char *string = malloc((digits) * sizeof(char));
+    int v = 0;
+    for (int i = digits-2; i >= 0; --i) {
+        v = num % 10;
+        string[i] = inttochar(v);
+        num /= 10;
     }
-    return NULL;
+    string[digits -1 ] = 0;
+    return string;
 }
 
 //turns a char to its integer representation
@@ -62,12 +80,8 @@ int main() {
     // "B:%s size=%d\n", a, achars, b, bchars);
     // printf("valueA is: %d\n",strtoint(a));
     // printf("valueB is: %d\n",strtoint(b));
-    int aval = strtoint(a);
-    int bval = strtoint(b);
-
-    int result = aval * bval;
-
-    char *strresult = inttostr(aval);
-
+    int result = strtoint(a) * strtoint(b);
+    char *strresult = inttostr(result);
+    printstr(strresult);
     return 0;
 }

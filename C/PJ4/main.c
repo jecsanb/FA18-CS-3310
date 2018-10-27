@@ -16,15 +16,12 @@ int charToInt(char c);
 
 int strToInt(char *str);
 
-void printStr(char *str);
+void printLn(char *str);
 
-void printStr(char *str) {
+void printLn(char *str) {
     assert(str != NULL);
-    while (*str) {
-        putchar(*str);
-        ++str;
-    }
-    putchar('\n');
+    write(1, str, strlen(str)* sizeof(char));
+    write(1, "\n", sizeof(char));
 }
 
 
@@ -91,7 +88,7 @@ int strToInt(char *str) {
 }
 
 /**
- * Asks for two integers separated by a space to be multiplied.
+ * Asks for two integers separated by a space to be added.
  */
 int main(int argc, char *argv[]) {
     char *input, *a, *b, *output;
@@ -103,6 +100,7 @@ int main(int argc, char *argv[]) {
     buffer_size = 255;
 
     input = (char *) malloc(buffer_size * sizeof(char));
+    printLn("Enter two numbers on one line separated by a space.");
     read(1, input, (size_t) 256);
     assert(input != NULL);
 
@@ -113,9 +111,10 @@ int main(int argc, char *argv[]) {
     b[strcspn(b, "\n")] = 0;
 
     //do the thing
-    result = strToInt(a) * strToInt(b);
+    result = strToInt(a) + strToInt(b);
     output = inttostr(result);
-    printStr(output);
+    printLn("Sum of the two numbers you entered = ");
+    printLn(output);
     //Land of the
     free(a);
     free(output);

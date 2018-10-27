@@ -24,6 +24,7 @@ void printStr(char *str) {
         putchar(*str);
         ++str;
     }
+    putchar('\n');
 }
 
 

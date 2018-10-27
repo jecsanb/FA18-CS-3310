@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
 
     printLn("Enter two numbers on one line separated by a space.");
     if(argc){
+        // support for command line arguments in string format.
         input = argv[1];
         printLn(input);
 

@@ -19,7 +19,6 @@ int strToInt(char *str);
 void printLn(char *str);
 
 void printLn(char *str) {
-    assert(str != NULL);
     write(1, str, strlen(str)* sizeof(char));
     write(1, "\n", sizeof(char));
 }
@@ -92,21 +91,28 @@ int strToInt(char *str) {
  */
 int main(int argc, char *argv[]) {
     char *input, *a, *b, *output;
-    char delimiter;
+    int inputAllocated = 0;
+    const char* delimiter = " ";
     int result;
     int buffer_size;
-
-    delimiter = ' ';
     buffer_size = 255;
 
-    input = (char *) malloc(buffer_size * sizeof(char));
     printLn("Enter two numbers on one line separated by a space.");
-    read(1, input, (size_t) 256);
-    assert(input != NULL);
+    if(argc){
+        input = argv[1];
+        printLn(input);
+
+    }else{
+        inputAllocated = 1;
+        input = (char *) malloc(buffer_size * sizeof(char));
+        read(1, input, (size_t) 256);
+        assert(input != NULL);
+    };
+
 
     //first number and second numbers
+    a = strsep(&input, delimiter);
     b = input;
-    a = strsep(&input, &delimiter);
     //removes the newline
     b[strcspn(b, "\n")] = 0;
 
@@ -116,7 +122,7 @@ int main(int argc, char *argv[]) {
     printLn("Sum of the two numbers you entered = ");
     printLn(output);
     //Land of the
-    free(a);
     free(output);
+    if(inputAllocated) free(a);
     return 0;
 }

@@ -32,7 +32,7 @@ int countDigit(int n) {
 /**
  *  Converts any digit [0-9] into its ascii representation.
  */
-char inttochar(int n) {
+char intToChar(int n) {
     assert(n >= 0 && n < 10);
     return (char) (n + 0x30);
 }
@@ -41,10 +41,11 @@ char inttochar(int n) {
 /**
  * A integer into its null terminated string representation.
  */
-char *inttostr(int num) {
+char *intToStr(int num) {
     int sign = num < 0;
-    int digits = countDigit(num) + 1 + sign;
-    char *string = malloc((digits) * sizeof(char));
+    int digits = countDigit(num);
+    int charsNeeded = digits + sign + 1; // 1 for the \00
+    char *string = malloc((charsNeeded) * sizeof(char));
     // handle negatives
     if (sign) {
         string[0] = '-';
@@ -53,7 +54,7 @@ char *inttostr(int num) {
     int v = 0;
     for (int i = digits - 2; i >= 0 + sign; --i) {
         v = num % 10;
-        string[i] = inttochar(v);
+        string[i] = intToChar(v);
         num /= 10;
     }
     string[digits - 1] = 0;
@@ -119,7 +120,7 @@ int main(int argc, char *argv[]) {
 
     //do the thing
     result = strToInt(a) + strToInt(b);
-    output = inttostr(result);
+    output = intToStr(result);
     printLn("Sum of the two numbers you entered = ");
     printLn(output);
     //Land of the

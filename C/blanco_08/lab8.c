@@ -11,6 +11,22 @@
 #include <assert.h>
 
 
+void mult2DIntMatrix(size_t N,size_t M, int matrixA[N][M], int matrixB[N][M], int product[N][M]) {
+    int mult = 0;
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < M; ++j) {
+            for (int k = 0; k < N; ++k) {
+                mult += matrixA[i][k] * matrixB[k][j];
+//                printf("[%d] * [%d]=[%d]\n",matrixA[i][k],matrixB[k][j],matrixA[i][k]*matrixB[k][j]);
+//                printf(" + ");
+            }
+            product[i][j] = mult;
+//            printf("=[%d]\n",mult);
+            mult = 0;
+        }
+    }
+
+}
 void print2DIntMatrix(size_t N,size_t M,int matrix[N][M]) {
     for(int i = 0; i < N; ++i){
         printf("[");
@@ -34,10 +50,29 @@ void get2DIntMatrix(size_t N,size_t M, int matrix[N][M]){
 int main(int argc, char** argsv) {
 
     srand(time(NULL));   // Initialization, should only be called once.
-    const size_t N = 4;
-    const size_t M = 4;
-    int matrix[N][M];
-    get2DIntMatrix(N,M,matrix);
-    print2DIntMatrix(N,M,matrix);
+    const size_t N = 2;
+    const size_t M = 2;
+    int matrixA[N][M] ={
+            {23,34},
+            {11,22}
+    };
+    int matrixB[N][M]={
+            {14,15},
+            {12,22}
+    };
+
+    int product[N][M];
+
+//    get2DIntMatrix(N,M,matrixA);
+    printf("Matrix a:\n");
+    print2DIntMatrix(N,M,matrixA);
+
+//    get2DIntMatrix(N,M,matrixB);
+    printf("Matrix b:\n");
+    print2DIntMatrix(N,M,matrixB);
+
+    mult2DIntMatrix(N,M,matrixA,matrixB,product);
+    printf("Product b:\n");
+    print2DIntMatrix(N,M,product);
     return 0;
 }
